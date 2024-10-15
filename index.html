@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ランダムな数字を表示</title>
+    <title>あなたの番です</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -21,6 +21,7 @@
             background: rgba(255, 255, 255, 0.1);
             border-radius: 15px;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            width: 400px;
         }
         h1 {
             font-size: 2.5em;
@@ -49,20 +50,71 @@
         button:hover {
             background-color: #ff3d3d;
         }
+        #history {
+            margin-top: 30px;
+            text-align: left;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        #history ul {
+            list-style: none;
+            padding: 0;
+        }
+        #history li {
+            background-color: #fff;
+            color: #333;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            padding: 10px;
+            font-size: 1.2em;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>ランダムな数字を表示</h1>
+        <h1>あなたの番です</h1>
         <div id="result">-</div>
         <button onclick="generateRandomNumber()">数字を生成</button>
+
+        <div id="history">
+            <h3>過去の履歴（1時間以内）</h3>
+            <ul id="historyList"></ul>
+        </div>
     </div>
 
     <script>
+        let history = [];
+
         function generateRandomNumber() {
             const randomNumber = Math.floor(Math.random() * 40) + 1;
             document.getElementById("result").textContent = randomNumber;
+
+            // 履歴に数字と現在の時刻を追加
+            const currentTime = new Date();
+            history.push({ number: randomNumber, time: currentTime });
+
+            // 1時間以内の履歴のみを表示（60分以内のデータ）
+            const oneHourAgo = new Date(currentTime - 60 * 60 * 1000);
+            history = history.filter(entry => entry.time > oneHourAgo);
+
+            // 履歴を更新して表示
+            updateHistory();
+        }
+
+        function updateHistory() {
+            const historyList = document.getElementById("historyList");
+            historyList.innerHTML = ''; // 履歴をクリア
+
+            // 最新10件を表示
+            const recentHistory = history.slice(-10);
+            recentHistory.forEach(entry => {
+                const li = document.createElement("li");
+                const timeString = entry.time.toLocaleTimeString();
+                li.textContent = `${entry.number} - ${timeString}`;
+                historyList.appendChild(li);
+            });
         }
     </script>
 
