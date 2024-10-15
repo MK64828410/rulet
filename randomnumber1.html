@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ランダムな数字を表示</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%);
+            color: #fff;
+        }
+        .container {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        #result {
+            font-size: 5em;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #ffdd57;
+            text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 1.5em;
+            background-color: #ff6f61;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 6px 20px rgba(255, 111, 97, 0.5);
+        }
+        button:hover {
+            background-color: #ff3d3d;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>ランダムな数字を表示</h1>
+        <div id="result">-</div>
+        <button onclick="generateRandomNumber()">数字を生成</button>
+    </div>
+
+    <script>
+        function generateRandomNumber() {
+            const randomNumber = Math.floor(Math.random() * 40) + 1;
+            document.getElementById("result").textContent = randomNumber;
+        }
+    </script>
+
+</body>
+</html>
